@@ -1,8 +1,8 @@
 import boto3
 
 s3 = boto3.client('s3')
-bucket_name = 'ece1779-assign2'
-bucket_url = 'https://s3.amazonaws.com/ece1779-assign2/'
+bucket_name = '*********'
+bucket_url = 'https://s3.amazonaws.com/**********/'
 
 
 def clear_s3():
