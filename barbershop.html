@@ -1,0 +1,136 @@
+{% extends "base.html" %}
+
+{% block head %}
+<title>Barbershop</title>
+<link rel="stylesheet" href="static/css/barbershop.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+<link href="static/emoji/css/emoji.css" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div class="card border-secondary mb-3">
+    <table class="table table-borderless">
+        <tr>
+            <td>
+                <h5 class="card-title">{{ barbershop.title }}</h5>
+                <p class="card-text">Welcome to our Shop! We sell the latest costumes</p>
+                <a href="#" class="btn btn-info">{{ avg1 }}</a>
+                {% for i in range(avg2) %}
+                <i class="fas fa-star"></i>
+                {% endfor %}
+                {% for i in range(5 - avg2) %}
+                <i class="far fa-star"></i>
+                {% endfor %}
+            </td>
+            <td style="text-align: right">
+                <img src="{{ barbershop.image }}" class="card-img-top barbershopImg">
+            </td>
+        </tr>
+    </table>
+</div>
+
+<p style="display:none" id="bbname">{{ barbershop.name }}</p>
+
+<ul class="nav nav-tabs mb-3" id="pills-tab" role="tablist">
+    <li class="nav-item" style="background-color:white">
+        <a class="nav-link active" style="color:green" id="pills-reserve-tab" data-toggle="pill" href="#pills-reserve"
+           role="tab" aria-controls="pills-reserve" aria-selected="false">
+            <h5><i class="fas fa-calendar-check"></i> Reservation</h5>
+        </a>
+    </li>
+    <li class="nav-item" style="background-color: white">
+        <a class="nav-link" style="color:blue" id="pills-review-tab" data-toggle="pill" href="#pills-review" role="tab"
+           aria-controls="pills-review" aria-selected="false">
+            <h5><i class="fas fa-edit"></i>Review</h5>
+        </a>
+    </li>
+</ul>
+
+
+<div class="tab-content" id="pills-tabContent">
+    <div class="tab-pane fade show active" id="pills-reserve" role="tabpanel" aria-labelledby="pills-reserve-tab">
+        <!--reserve...-->
+
+        <div style="background-color:white">
+            <div id="msg"></div>
+            <button class="btn btn-success" id="resv_btn"><i class="fas fa-plus"></i></button>
+            <button class="btn btn-secondary" id="refresh_btn"><i class="fas fa-sync-alt"></i></button>
+            <br><br>
+            <table id="resv_table" class="display">
+                <thead>
+                <tr>
+                    <th></th>
+                    <th>Time</th>
+                    <th>Costume</th>
+                    <th>Price</th>
+                </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <div class="tab-pane fade" id="pills-review" role="tabpanel" aria-labelledby="pills-review-tab">
+        <!--review...-->
+        <div style="background-color:white; padding:10px">
+
+            <div id="review_table"></div>
+            <br><br>
+            <div class="media" style="margin-left:40px">
+                <img class="d-flex rounded-circle avatar z-depth-1-half mr-3" style="weight:50%;height:50%"
+                     src="static/img/default.jpg"
+                     alt="Avatar">
+                <div class="media-body">
+                    <h5 class="mt-0 font-weight-bold blue-text">{{ session['user']['name'] }}</h5>
+                    <div class="form-group form-inline">
+                        <p style="display: none" id="star-p">0</p>
+                        <i id="star1" class="far fa-star"></i>
+                        <i id="star2" class="far fa-star"></i>
+                        <i id="star3" class="far fa-star"></i>
+                        <i id="star4" class="far fa-star"></i>
+                        <i id="star5" class="far fa-star"></i>
+                    </div>
+                    <div class="lead emoji-picker-container">
+                        <input class="form-control" id="reviewText" placeholder="Input your review ~" data-emojiable="true">
+                    </div>
+                    <br>
+                    <button class="btn btn-warning" id="review_btn">submit</button>
+                    <br>
+                    <div id="review_msg"></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+
+{% block footer %}
+<script src="static/js/barbershop.js"></script>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+<script src="static/emoji/js/config.js"></script>
+<script src="static/emoji/js/util.js"></script>
+<script src="static/emoji/js/jquery.emojiarea.js"></script>
+<script src="static/emoji/js/emoji-picker.js"></script>
+
+<script>
+      $(function() {
+        // Initializes and creates emoji set from sprite sheet
+        window.emojiPicker = new EmojiPicker({
+          emojiable_selector: '[data-emojiable=true]',
+          assetsPath: 'static/emoji/img',
+          popupButtonClasses: 'fa fa-smile-o'
+        });
+        // Finds all elements with `emojiable_selector` and converts them to rich emoji input fields
+        // You may want to delay this step if you have dynamically created input fields that appear later in the loading process
+        // It can be called as many times as necessary; previously converted input fields will not be converted again
+        window.emojiPicker.discover();
+      });
+
+</script>
+{% endblock%}

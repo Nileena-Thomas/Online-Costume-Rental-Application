@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block head %}
+<title>Home</title>
+<link rel="stylesheet" href="static/css/barbershop.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+{% endblock %}
+
+{% block content %}
+<div class="card border-secondary mb-3">
+      <table class="table table-borderless">
+          <tr>
+              <td>
+                <h5 class="card-title">{{ barbershop.title }}</h5>
+                <p class="card-text">Welcome to our costume shop! </p>
+                <a href="#" class="btn btn-info">{{ avg1 }}</a>
+                  {% for i in range(avg2) %}
+                    <i class="fas fa-star"></i>
+                  {% endfor %}
+                  {% for i in range(5 - avg2) %}
+                    <i class="far fa-star"></i>
+                  {% endfor %}
+              </td>
+                <td style="text-align: right">
+                    <img src="{{ barbershop.image }}" class="card-img-top barbershopImg">
+                </td>
+          </tr>
+      </table>
+</div>
+
+<p style="display:none" id="bbname">{{ barbershop.name }}</p>
+
+<ul class="nav nav-tabs mb-3" id="pills-tab" role="tablist">
+    <li class="nav-item" style="background-color:white">
+        <a class="nav-link active" style="color:green" id="pills-reserve-tab" data-toggle="pill" href="#pills-reserve"
+           role="tab" aria-controls="pills-reserve" aria-selected="false">
+            <h5><i class="fas fa-calendar-check"></i> Reservation</h5>
+        </a>
+    </li>
+    <li class="nav-item" style="background-color: white">
+        <a class="nav-link" style="color:blue" id="pills-review-tab" data-toggle="pill" href="#pills-review" role="tab"
+           aria-controls="pills-review" aria-selected="false">
+            <h5><i class="fas fa-edit"></i>Review</h5>
+        </a>
+    </li>
+</ul>
+
+<div class="tab-content" id="pills-tabContent">
+    <div class="tab-pane fade show active" id="pills-reserve" role="tabpanel" aria-labelledby="pills-reserve-tab">
+        <!--reserve...-->
+        <div style="background-color:white">
+        <div id="msg"></div>
+        <table id="resv_table" class="display">
+            <thead>
+                <tr>
+                    <th>Customer</th>
+                    <th>Time</th>
+                    <th>Costume</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+        </div>
+    </div>
+
+    <div class="tab-pane fade" id="pills-review" role="tabpanel" aria-labelledby="pills-review-tab">
+        <!--review...-->
+        <div style="background-color:white; padding:10px">
+            <div id="review_table"></div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
+
+
+{% block footer %}
+<script src="static/js/home_barbershop.js"></script>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+{% endblock%}

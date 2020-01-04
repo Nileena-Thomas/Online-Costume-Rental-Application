@@ -1,0 +1,74 @@
+ {% extends "base.html" %}
+
+{% block head %}
+<title>Home</title>
+<link rel="stylesheet" href="static/css/home.css">
+{% endblock%}
+
+{% block content %}
+<div class="bd-example">
+    <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+            <li data-target="#carouselExampleCaptions" data-slide-to="0" class="active"></li>
+            <li data-target="#carouselExampleCaptions" data-slide-to="1"></li>
+            <li data-target="#carouselExampleCaptions" data-slide-to="2"></li>
+        </ol>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <a href="barbershop?name={{ barbershop_list[0]['name']}}">
+                    <img src="{{ barbershop_list[0]['image'] }}" class="img-rec" alt="...">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>{{ barbershop_list[0]['title'] }}</h5>
+                    </div>
+                </a>
+            </div>
+            <div class="carousel-item">
+                <a href="barbershop?name={{ barbershop_list[1]['name']}}">
+                    <img src="{{ barbershop_list[1]['image'] }}" class="img-rec" alt="...">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>{{ barbershop_list[1]['title'] }}</h5>
+                    </div>
+                </a>
+            </div>
+            <div class="carousel-item">
+                <a href="barbershop?name={{ barbershop_list[2]['name']}}">
+                    <img src="{{ barbershop_list[2]['image'] }}" class="img-rec" alt="...">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>{{ barbershop_list[2]['title'] }}</h5>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+</div>
+
+
+<br>
+
+<div class="row">
+    <div class="input-group col-md-7">
+        <input type="text" class="form-control" id="pac-input" placeholder="Search" aria-label="Search"
+               aria-describedby="search-icon">
+        <div class="input-group-append">
+            <span class="input-group-text" id="search-icon"><i class="fas fa-search"></i></span>
+        </div>
+    </div>
+</div>
+<br>
+
+{% endblock %}
+
+
+{% block footer %}
+<script src="https://maps.googleapis.com/maps/api/js?key=your_key&libraries=places&callback=initMap&language=en" async
+        defer></script>
+<script src="static/js/home.js"></script>
+{% endblock%}

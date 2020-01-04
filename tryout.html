@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <meta http-equiv="content-language" content="en-EN" />
+        <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+
+        
+        <title>JEELIZ FACE FILTER : FACE REPLACEMENT DEMO</title>
+        
+        <!-- INCLUDE JEELIZ FACEFILTER SCRIPT -->
+        <script type="text/javascript" src="static/facefilter/js/jeelizFaceFilter.js"></script>
+
+        <!-- INCLUDE DEMO SCRIPT -->
+        <script type="text/javascript" src="static/facefilter/js/demo_faceReplacement.js"></script>
+
+        <!-- base -->
+        <!-- JQuery, Popper, then Bootstrap JS !-->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+              integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <!--Fontawesome CDN-->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+        <!-- My css !-->
+        <link rel="stylesheet" href="static/css/main.css">
+        <!-- base -->
+
+        <!--&lt;!&ndash; INCLUDE FORK ME ON GITHUB BANNER &ndash;&gt;-->
+        <!--<script type="text/javascript" src="../../appearance/widget.js"></script>-->
+
+        <style type='text/css'>
+        body {
+            margin: 0px;
+            box-sizing: border-box;
+            overflow: hidden;
+            font-family: Helvetica, Arial, Sans-Serif;
+            background-image: url('static/img/blue.jpg');
+            background-attachment: fixed;
+            background-position: center;
+            background-size: contain;
+            padding-top: 80px;
+        }
+        #artpaintingContainer {
+            /*background-color: red;*/
+             z-index: 10;
+            position: absolute; 
+            max-height: calc(100vh - 160px);
+            max-width: 100vw;
+            left: 50%;
+            top: 50%;
+            margin-top: 0px;
+            transform: translate(-50%, -50%);
+        }
+        #jeeFaceFilterCanvas {
+        }
+        .artPainting  {
+            z-index: 8;
+            top: 80px;
+            left: 0px;
+            max-width: 100vw;
+            max-height:  calc(100vh - 160px);
+        }
+        .canvasDetected { /*style of the canvas when user face is detected*/
+            position: absolute;
+            z-index: -1;
+        }
+        .canvasNotDetected { /*style of the canvas when user face is lost */
+            z-index: 11;
+            position: absolute;
+            top: auto !important;
+            bottom: 0px !important;
+            left: 0px !important;
+            max-width: 100% !important;
+            max-height: 100% !important;
+        }
+        #carousel {
+            z-index: 20;
+            position: fixed;
+            max-width: 100vw;
+            bottom: 0px;
+            top: 500px;
+            overflow-y: scroll;
+            overflow-x: hidden;
+        }
+        .carouselItem{
+            cursor: pointer;
+            border: 6px solid transparent;
+            min-height: 128px;
+            width: auto !important;
+            background-size: contain;
+            background-repeat: no-repeat;
+        }
+        .slick-slide{
+          /* width: auto !important; */
+        }
+        .slick-center {
+          transform: scale(1.1);
+          z-index: 99;
+          transform-origin: center bottom;
+          box-shadow: 0px 0px 12px white;
+        }
+        .slick-center .carouselItem{
+            border: none !important;
+          
+        }
+        .slick-track{
+            height: 144px;
+            margin-top: 20px;
+        }
+        .carouselItem1 {
+            background-image: url('static/images/will_smith.jpg');
+            width: 86px !important;            
+        }
+        .carouselItem2 {
+            background-image: url('static/images/Joconde.jpg');
+            width: 86px !important;            
+        }
+        .carouselItem3 {
+            background-image: url('static/images/liberty.jpg');
+            width: 128px !important;            
+        }
+        .carouselItem4 {
+            background-image: url('static/images/doors.jpg');
+            width: 128px !important;
+        }
+        .carouselItem5 {
+            background-image: url('static/images/louis14.jpg');
+            width: 128px !important;
+        }
+        .carouselItemCustom{
+            background-image: url('thumbnails/own.png');
+            color: black;
+            font-size: 10pt;
+            line-height: 1.5em;
+            font-variant: small-caps;
+            text-align: center;
+            width: 128px !important;
+            overflow: hidden;
+        }
+        .carouselItemCustomText{
+            margin-top: 8px;
+            margin-left: 16px;
+            margin-right: 16px;
+            text-shadow: 0px 0px 4px white;
+        }
+        #customImage{
+            cursor: pointer;
+            width: 118px;
+        }
+
+        </style>
+
+        <!-- SLICK CAROUSEL STYLE -->
+        <!-- Add the slick-theme.css if you want default styling -->
+        <link rel="stylesheet" type="text/css" href="static/facefilter/css/slick.css"/>
+        <!-- Add the slick-theme.css if you want default styling -->
+        <link rel="stylesheet" type="text/css" href="static/facefilter/css/slick-theme.css"/>
+        <!-- jQuery (required by Slick Carousel) -->
+        <script type='text/javascript' src='static/facefilter/js/jquery-3.3.1.min.js'></script>
+
+    </head>
+    
+    <body onload="main()" style='color: white'>
+    <!-- base -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <a class="navbar-brand" href="#">
+        <img src="static/img/pumpkin.jpg" width="35" height="30" class="d-inline-block align-top" alt="">
+        Online Costume Rentals
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
+            aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarText">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item" id="nav-home">
+                <a class="nav-link" href="{{ url_for('home') }}">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item" id="nav-tryout">
+                <a class="nav-link" href="{{ url_for('tryout') }}">Tryout</a>
+            </li>
+        </ul>
+        {% if 'user' in session %}
+
+        <div class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="far fa-user"></i>
+                <span class="navbar-text">{{ session['user']['name'] }}</span>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="{{ url_for('history') }}">
+                    History
+                    <i class="fas fa-history"></i>
+                </a>
+                <a class="dropdown-item" href="{{ url_for('logout') }}">
+                    Logout
+                    <i class="fas fa-sign-out-alt"></i></a>
+            </div>
+        </div>
+
+
+        {% else %}
+        <a class="btn btn-outline-success btn-small" href="{{ url_for('login') }}">Sign in</a>
+        <span class="navbar-text">&nbsp or &nbsp</span>
+        <a class="btn btn-outline-primary btn-small" href="{{ url_for('register')}}">Sign up</a>
+        {% endif %}
+    </div>
+</nav>
+    <!-- base -->
+
+
+        <div id='artpaintingContainer'>
+            <canvas width="1024" height="1024" id='jeeFaceFilterCanvas' class='artPainting'></canvas>
+        </div>
+
+        <!-- SLICK CAROUSEL CONTENT -->
+        <!--
+            If the detected State is not provided (ie {x: ...., y:..., s:... }
+            We will search for a face on the provided picture
+            (and display the found face detected State in the JS console)
+            Otherwise we build the image mask directly using the detected State.
+        -->
+        <div id="carousel">
+            <div
+                onclick="change_artPainting('static/images/will_smith.jpg', {x:0.0202,y:0.36471,s:0.50589,ry:-0.03227})"
+                class='carouselItem carouselItem1'
+            ></div>
+            <div
+                onclick="change_artPainting('static/images/Joconde.jpg', {x:0.05008,y:0.3676,s:0.27433,ry:0.15356})"
+                class='carouselItem carouselItem2'
+            ></div>
+            <div
+                onclick="change_artPainting('static/images/liberty.jpg', {x:0.15008,y:0.1676,s:0.27433,ry:0.15356})"
+                class='carouselItem carouselItem3'
+            ></div>
+            <div
+                onclick="change_artPainting('static/images/doors.jpg', {x:0.15008,y:0.2676,s:0.27433,ry:0.15356})"
+                class='carouselItem carouselItem4'
+            ></div>
+            <div
+                onclick="change_artPainting('static/images/louis14.jpg', {x:0.09804,y:0.26254,s:0.1098,ry:-0.26134})"
+                class='carouselItem carouselItem5'
+            ></div>
+
+            <div class='carouselItem carouselItemCustom'>
+                <div class='carouselItemCustomText'>
+                    TRY WITH YOUR OWN IMAGE :
+                </div>
+                <input type='file' id='customImage' onChange="change_artPainting('CUSTOM');" />
+            </div>
+
+        </div>
+
+
+
+        <!-- SLICK CAROUSEL SCRIPT -->
+        <script type="text/javascript" src="static/facefilter/js/slick.min.js"></script>
+
+        <script type="text/javascript" src="static/js/tryout.js"></script>
+
+    <!-- Booststrap JS !-->
+    <!--<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"-->
+            <!--integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"-->
+            <!--crossorigin="anonymous"></script>-->
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"-->
+            <!--integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"-->
+            <!--crossorigin="anonymous"></script>-->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+    </body>
+</html>
+ 
+ 
