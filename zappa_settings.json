@@ -4,7 +4,7 @@
        "keep_warm": false,
        "debug": true,
        "log_level": "DEBUG",
-       "s3_bucket": "ece1779-assign2",
+       "s3_bucket": "**********",
        "app_function": "flaskr.wapp",
        "http_methods": ["GET","POST"],
        "parameter_depth": 1,
